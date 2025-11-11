@@ -43,14 +43,5 @@ A small interactive simulation of a playground seesaw. Click on the plank to dro
 - Distances are in pixels; the scale factor `(÷ 10)` in angle computation is empirical to achieve a good visual range.
 - Objects placed exactly at the center contribute no torque and do not count toward a side in the side weight totals (by design).
 
-### What could be improved (Ideas)
-- Add a subtle bounce/easing on angle approach.
-- Add a scale/grid under the plank showing distances from the center.
-- Allow removing or dragging objects.
-- Offer an extended interaction such as press-and-hold to add multiple weights or a quick selector for desired weight before dropping.
-- Add sounds or particle effects when weights land.
-
-### AI Assistance
-- Some parts of wording and minor refactoring suggestions were reviewed with an AI assistant, but the implementation was done in pure JavaScript, HTML, and CSS with full understanding of each step. See `EXPLANATIONS.txt` for a detailed breakdown of the logic and reasoning.
 
 
