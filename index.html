@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seesaw Simulation</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <h1 class="title">Seesaw Simulation</h1>
+      <div class="hud">
+        <div class="weights">
+          <span class="label">Left total:</span>
+          <span id="leftWeight" class="value">0 kg</span>
+        </div>
+        <div class="weights">
+          <span class="label">Right total:</span>
+          <span id="rightWeight" class="value">0 kg</span>
+        </div>
+        <div class="controls">
+          <button id="resetBtn" type="button" title="Clear all objects and state">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <section class="stage">
+        <div id="seesaw" class="seesaw" aria-label="Seesaw plank" role="button">
+          <div class="plank" id="plank">
+            <div class="center-line" aria-hidden="true"></div>
+            <div class="objects-layer" id="objectsLayer"></div>
+          </div>
+          <div class="pivot" aria-hidden="true"></div>
+          <div id="directionIndicator" class="direction-indicator neutral"></div>
+        </div>
+      </section>
+
+      <p class="hint">
+        Click anywhere on the plank to drop a random weight (1–10 kg) at that position.
+      </p>
+    </main>
+
+    <script src="./main.js"></script>
+  </body>
+  </html>
+
+
