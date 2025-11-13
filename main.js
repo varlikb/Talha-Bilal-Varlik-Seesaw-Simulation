@@ -12,22 +12,22 @@
     const OBJ_RADIUS = 12;
   
   // pull dom from html
-  let seesawRoot = document.getElementById('seesaw');
-  let plank = document.getElementById('plank');
-  let objectsLayer = document.getElementById('objectsLayer');
-  var leftWeightEl = document.getElementById('leftWeight');
-  var rightWeightEl = document.getElementById('rightWeight');
-  let leftTorqueEl = document.getElementById('leftTorque'), 
-      rightTorqueEl = document.getElementById('rightTorque');
+  const seesawRoot = document.getElementById('seesaw');
+  const plank = document.getElementById('plank');
+  const objectsLayer = document.getElementById('objectsLayer');
+  const leftWeightEl = document.getElementById('leftWeight');
+  const rightWeightEl = document.getElementById('rightWeight');
+  const leftTorqueEl = document.getElementById('leftTorque');
+  const rightTorqueEl = document.getElementById('rightTorque');
   const tiltAngleEl = document.getElementById('tiltAngle');
   const nextWeightEl = document.getElementById('nextWeight');
-  var directionArrow = document.getElementById('directionIndicator');
+  const directionArrow = document.getElementById('directionIndicator');
   const resetBtn = document.getElementById('resetBtn');
 
-  var audioCtx; // audio context for sound effects maybe delete this part
+  let audioCtx; // audio context for sound effects maybe delete this part
   
   // main app state - prefacot into class ?
-  var app = {
+  const app = {
     objects: [],
     targetAngle: 0,
     currentAngle: 0,
@@ -80,12 +80,12 @@
       clientY = e.touches[0].clientY;
     }
     
-    var dx = clientX - cx,
-        dy = clientY - cy;
+    const dx = clientX - cx;
+    const dy = clientY - cy;
     
     // rotate the coordinates back based on current angle
-    let angle = (-app.currentAngle * Math.PI) / 180;
-    var localX = dx * Math.cos(angle) - dy * Math.sin(angle);
+    const angle = (-app.currentAngle * Math.PI) / 180;
+    const localX = dx * Math.cos(angle) - dy * Math.sin(angle);
     
     // use actual plank width from DOM - fixes responsive bug
     const actualPlankWidth = rect.width;
@@ -162,7 +162,7 @@
 
   // load saved state on start
   function loadFromStorage() {
-    var saved = localStorage.getItem('seesawState');
+    const saved = localStorage.getItem('seesawState');
     if(!saved) return;
     
     try {
@@ -215,7 +215,7 @@
   // remove an object - maybe use filter() ?
   function removeObj(id) {
     // filter out the object with this id we dont get the given id obj to the filtered list and we changing thhe list with new filterede
-    var filtered = [];
+    const filtered = [];
     for(let i = 0; i < app.objects.length; i++) {
       if(app.objects[i].id !== id) {
         filtered.push(app.objects[i]);
@@ -239,7 +239,7 @@
     if(obj) {
       obj.x = newX;
       // update visual position - use actual plank width bc
-      var el = objectsLayer.querySelector('[data-id="' + id + '"]');
+      const el = objectsLayer.querySelector('[data-id="' + id + '"]');
       if(el) {
         const actualPlankWidth = plank.getBoundingClientRect().width;
         el.style.left = (actualPlankWidth/2 + newX) + 'px';
@@ -281,20 +281,20 @@
   // physic part
   function updatePhysics() {
     let leftT = 0, rightT = 0;
-    var leftW = 0, rightW = 0;
+    let leftW = 0, rightW = 0;
 
-    for(var i = 0; i < app.objects.length; i++) {
+    for(let i = 0; i < app.objects.length; i++) {
       const obj = app.objects[i];
-      let x = obj.x, 
-          w = obj.weight;
-      var absX = Math.abs(x);
+      const x = obj.x;
+      const w = obj.weight;
+      const absX = Math.abs(x);
       
       // special case: objects that overlap the center pivot
       // need to split their weight/torque contribution
       if(absX < OBJ_RADIUS) {
-        let ratio = (x + OBJ_RADIUS) / (2 * OBJ_RADIUS);
-        var rightPart = w * ratio;
-        let leftPart = w - rightPart;
+        const ratio = (x + OBJ_RADIUS) / (2 * OBJ_RADIUS);
+        const rightPart = w * ratio;
+        const leftPart = w - rightPart;
         
         rightT += rightPart * (ratio * OBJ_RADIUS / 2);
         leftT += leftPart * ((1-ratio) * OBJ_RADIUS / 2);
@@ -321,9 +321,9 @@
     rightTorqueEl.textContent = displayedRightT;
     
     // calculate the target angle based on torque difference
-    var diff = rightT - leftT;
-    let raw = diff / (100 * ANGLE_SCALE);
-    var target = clamp(raw, -MAX_ANGLE, MAX_ANGLE);
+    const diff = rightT - leftT;
+    const raw = diff / (100 * ANGLE_SCALE);
+    let target = clamp(raw, -MAX_ANGLE, MAX_ANGLE);
 
     // if balanced let angle be 0
     // we move on and do to the shwons torks
@@ -365,7 +365,7 @@
 
   // animation loop - 
   function tick() {
-    var diff = app.targetAngle - app.currentAngle;
+    const diff = app.targetAngle - app.currentAngle;
 
     // smooth easing towards target angle
     // move faster when its balanced.
@@ -407,7 +407,7 @@
     if(!target) return;
     
     e.stopPropagation();
-    let id = parseInt(target.dataset.id);
+    const id = parseInt(target.dataset.id);
     
     if(e.type === 'contextmenu') {
       // right click removes object
@@ -427,7 +427,7 @@
   function onMouseMove(e) {
     if(!app.dragging || app.draggedId === null) return;
     
-    let x = getClickPosition(e);
+    const x = getClickPosition(e);
     moveObj(app.draggedId, x);
     updatePhysics();
   }
@@ -451,7 +451,7 @@
     if(!target) return;
     
     e.preventDefault(); // prevent scroll 
-    let id = parseInt(target.dataset.id);
+    const id = parseInt(target.dataset.id);
     
     app.longPressTriggered = false;
     
@@ -475,7 +475,7 @@
     }
     
     e.preventDefault();
-    let x = getClickPosition(e);
+    const x = getClickPosition(e);
     moveObj(app.draggedId, x);
     updatePhysics();
   }
